@@ -552,7 +552,7 @@
       <p>Un assistant virtuel, disponible à toute heure, pour des informations claires sur les pathologies, les examens et les interventions — en complément de votre consultation.</p>
     </div>
     <div class="reveal" style="text-align:center;margin-top:10px;">
-      <a class="btn btn-primary btn-lg" href="https://assistant.meyeclinic.fr" target="_blank" rel="noopener">Poser une question à l'assistant</a>
+      <button type="button" class="btn btn-primary btn-lg" onclick="dmOpen()">Poser une question à l'assistant</button>
       <p style="font-size:.82rem;color:var(--muted);margin-top:12px;">Informations générales — ne remplace pas une consultation médicale.</p>
     </div>
   </div>
@@ -747,16 +747,66 @@
   function closeFiche(){document.getElementById('ficheModal').classList.remove('open');document.body.style.overflow='';}
   addEventListener('keydown',function(e){if(e.key==='Escape')closeFiche();});
 </script>
-<a class="chat-fab" href="https://assistant.meyeclinic.fr" target="_blank" rel="noopener" aria-label="Poser une question à l'assistant en ligne">
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>
-  <span class="chat-fab-label">Une question ?</span>
-</a>
+<div id="dm-chat" aria-live="polite">
+  <button id="dm-fab" type="button" aria-label="Ouvrir l'assistant du Dr Martiano" onclick="dmToggle()">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>
+    <span class="dm-fab-label">Une question&nbsp;?</span>
+  </button>
+  <div id="dm-panel" role="dialog" aria-label="Assistant du Dr David Martiano">
+    <div class="dm-head">
+      <div class="dm-head-t"><b>Assistant du Dr Martiano</b><span>Vos yeux, vos questions · 24h/24</span></div>
+      <button type="button" class="dm-x" aria-label="Fermer" onclick="dmToggle()">&times;</button>
+    </div>
+    <div id="dm-msgs"></div>
+    <form id="dm-form" onsubmit="return dmSend(event)">
+      <input id="dm-input" type="text" autocomplete="off" placeholder="Écrivez votre question…">
+      <button type="submit" class="dm-send" aria-label="Envoyer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z"/></svg>
+      </button>
+    </form>
+    <div class="dm-disc">Informations générales — ne remplace pas une consultation. Urgence&nbsp;: <a href="tel:+33497193046">04 97 19 30 46</a>.</div>
+  </div>
+</div>
 <style>
-.chat-fab{position:fixed;right:20px;bottom:20px;z-index:200;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#2C6FA0,#13314F);color:#fff;padding:12px 18px 12px 14px;border-radius:999px;box-shadow:0 14px 34px -10px rgba(19,49,79,.6);font-weight:700;font-size:.9rem;text-decoration:none;transition:.25s;animation:fabpulse 2.8s infinite}
-.chat-fab:hover{transform:translateY(-3px)}
-.chat-fab svg{flex:none}
-@keyframes fabpulse{0%,100%{box-shadow:0 14px 34px -10px rgba(19,49,79,.55)}50%{box-shadow:0 16px 44px -6px rgba(44,111,160,.8)}}
-@media(max-width:560px){.chat-fab .chat-fab-label{display:none}.chat-fab{padding:15px;border-radius:50%;right:16px;bottom:16px}}
+  #dm-fab{position:fixed;right:20px;bottom:20px;z-index:300;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#2C6FA0,#13314F);color:#fff;border:none;cursor:pointer;padding:12px 18px 12px 14px;border-radius:999px;box-shadow:0 14px 34px -10px rgba(19,49,79,.6);font:inherit;font-weight:700;font-size:.9rem;transition:.25s;animation:dmpulse 2.8s infinite}
+  #dm-fab:hover{transform:translateY(-3px)}
+  @keyframes dmpulse{0%,100%{box-shadow:0 14px 34px -10px rgba(19,49,79,.55)}50%{box-shadow:0 16px 44px -6px rgba(44,111,160,.8)}}
+  #dm-panel{position:fixed;right:20px;bottom:20px;z-index:301;width:min(380px,92vw);height:min(560px,80vh);background:#fff;border-radius:20px;box-shadow:0 30px 80px -20px rgba(19,49,79,.55);display:none;flex-direction:column;overflow:hidden;border:1px solid #dce8f2}
+  #dm-chat.open #dm-panel{display:flex;animation:dmpop .22s ease}
+  #dm-chat.open #dm-fab{display:none}
+  @keyframes dmpop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+  .dm-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 16px;background:linear-gradient(135deg,#2C6FA0,#13314F);color:#fff}
+  .dm-head-t b{font-family:'Gelasio',serif;font-size:1.02rem;display:block;line-height:1.2}
+  .dm-head-t span{font-size:.74rem;opacity:.85}
+  .dm-x{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;font-size:1.2rem;cursor:pointer;line-height:1}
+  .dm-x:hover{background:rgba(255,255,255,.3)}
+  #dm-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#f5f9fc}
+  .dm-b{max-width:85%;padding:10px 13px;border-radius:14px;font-size:.9rem;line-height:1.5;white-space:pre-wrap}
+  .dm-b.bot{align-self:flex-start;background:#fff;border:1px solid #e3edf5;color:#1f2d3d;border-bottom-left-radius:4px}
+  .dm-b.me{align-self:flex-end;background:#2C6FA0;color:#fff;border-bottom-right-radius:4px}
+  .dm-b.typing{color:#7d93a6;font-style:italic}
+  #dm-form{display:flex;gap:8px;padding:12px;border-top:1px solid #eaf1f7;background:#fff}
+  #dm-input{flex:1;border:1px solid #cfe0ee;border-radius:999px;padding:11px 15px;font:inherit;font-size:.9rem;outline:none}
+  #dm-input:focus{border-color:#2C6FA0}
+  .dm-send{flex:none;width:42px;height:42px;border:none;border-radius:50%;background:linear-gradient(135deg,#2C6FA0,#13314F);cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .dm-send:hover{filter:brightness(1.08)}
+  .dm-disc{font-size:.68rem;color:#7d93a6;text-align:center;padding:0 12px 12px;background:#fff}
+  .dm-disc a{color:#2C6FA0;font-weight:600}
+  @media(max-width:560px){#dm-fab .dm-fab-label{display:none}#dm-fab{padding:15px;right:16px;bottom:16px}#dm-panel{right:0;bottom:0;width:100vw;height:100dvh;border-radius:0}}
 </style>
+<script>
+  var DM_API="https://assistant.meyeclinic.fr/api/chat", DM_hist=[], DM_busy=false, DM_started=false;
+  function dmEl(id){return document.getElementById(id);}
+  function dmToggle(){var c=dmEl('dm-chat');c.classList.toggle('open');if(c.classList.contains('open')){if(!DM_started){DM_started=true;dmBot("Bonjour 👋 Je suis l'assistant du Dr Martiano. Posez-moi vos questions sur vos yeux, vos examens ou une intervention.");}setTimeout(function(){dmEl('dm-input').focus();},100);}}
+  function dmOpen(){var c=dmEl('dm-chat');if(!c.classList.contains('open'))dmToggle();}
+  function dmFmt(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');}
+  function dmAdd(txt,cls){var d=document.createElement('div');d.className='dm-b '+cls;d.innerHTML=dmFmt(txt);dmEl('dm-msgs').appendChild(d);dmEl('dm-msgs').scrollTop=1e9;return d;}
+  function dmBot(t){dmAdd(t,'bot');}
+  function dmSend(e){e.preventDefault();if(DM_busy)return false;var i=dmEl('dm-input'),q=i.value.trim();if(!q)return false;i.value='';dmAdd(q,'me');DM_hist.push({role:'user',content:q});DM_busy=true;var t=dmAdd('…','bot typing');
+    fetch(DM_API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({client:'martiano',messages:DM_hist})})
+      .then(function(r){return r.json();}).then(function(d){t.remove();var rep=(d&&d.reply)?d.reply:"Désolé, je n'ai pas pu répondre. Réessayez, ou appelez le 04 97 19 30 46.";dmBot(rep);DM_hist.push({role:'assistant',content:rep});DM_busy=false;})
+      .catch(function(){t.remove();dmBot("Une erreur est survenue. Réessayez, ou appelez le 04 97 19 30 46.");DM_busy=false;});
+    return false;}
+</script>
 </body>
 </html>
