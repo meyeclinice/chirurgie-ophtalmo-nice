@@ -298,6 +298,7 @@
         <li><a href="actualites.html">Actualités</a></li>
         <li><a href="#medecin">Votre Chirurgien</a></li>
         <li><a href="#consulter">Accès</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
     <div class="head-right">
@@ -612,6 +613,39 @@
   <figcaption>Nice, la Baie des Anges — à quelques minutes du cabinet.</figcaption>
 </figure>
 
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="shead reveal"><span class="kicker">Nous écrire</span><h2>Une question ? Contactez le cabinet</h2><p>Renseignements, rendez-vous ou suivi : écrivez-nous, le secrétariat vous répond rapidement. En cas d'urgence, appelez le 04 97 19 30 46.</p></div>
+    <form class="cform reveal" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onsubmit="return cfSend(event,'contact',false)">
+      <input type="hidden" name="form-name" value="contact">
+      <p class="cf-hp"><label>Ne pas remplir&nbsp;: <input name="bot-field"></label></p>
+      <div class="cf-row">
+        <label>Nom et prénom<input type="text" name="nom" required></label>
+        <label>Email<input type="email" name="email" required></label>
+      </div>
+      <div class="cf-row">
+        <label>Téléphone<input type="tel" name="telephone"></label>
+        <label>Sujet
+          <select name="sujet">
+            <option>Prise de rendez-vous</option>
+            <option>Chirurgie réfractive (laser)</option>
+            <option>Chirurgie de la cataracte</option>
+            <option>Rétine / DMLA</option>
+            <option>Autre demande</option>
+          </select>
+        </label>
+      </div>
+      <label>Votre message<textarea name="message" rows="5" required></textarea></label>
+      <label class="cf-consent"><input type="checkbox" name="consentement" value="oui" required> <span>J'accepte que mes données soient utilisées pour traiter ma demande, conformément à la <a href="#" onclick="openFiche('rgpd');return false;">politique de confidentialité</a>.</span></label>
+      <div class="cf-actions">
+        <button type="submit" class="btn btn-primary btn-lg">Envoyer ma demande</button>
+        <span id="cf-status" class="cf-status" role="status"></span>
+      </div>
+    </form>
+  </div>
+</section>
+
 <!-- CTA -->
 <section>
   <div class="wrap">
@@ -637,7 +671,7 @@
       </div>
       <div><h4>Spécialités</h4><ul><li><a href="#refractive">Chirurgie réfractive</a></li><li><a href="#refractive">LASIK · PKR · ICL</a></li><li><a href="#retine">Chirurgie de la rétine</a></li><li><a href="#soins">Cataracte &amp; implants</a></li><li><a href="#soins">DMLA &amp; injections</a></li></ul></div>
       <div><h4>Cabinet</h4><ul><li><a href="https://maps.google.com/maps?q=3%20Rue%20Fod%C3%A9r%C3%A9%2006300%20Nice" target="_blank" rel="noopener">3 Rue Fodéré, 06300 Nice</a></li><li>1 chemin de Vienne, 06440 Blausasc</li><li><a href="tel:+33497193046">04 97 19 30 46</a></li><li>Lun – Ven · 8h30 – 18h30</li></ul></div>
-      <div><h4>Rendez-vous</h4><ul><li><a href="https://www.doctolib.fr/ophtalmologue/nice/david-martiano" target="_blank" rel="noopener">Doctolib</a></li><li><a href="actualites.html">Actualités</a></li><li><a href="#assistant-ia">Assistant IA</a></li><li><a href="#faq">FAQ</a></li><li><a href="#medecin">Le médecin</a></li><li><a href="#consulter">Accès</a></li></ul></div>
+      <div><h4>Rendez-vous</h4><ul><li><a href="https://www.doctolib.fr/ophtalmologue/nice/david-martiano" target="_blank" rel="noopener">Doctolib</a></li><li><a href="actualites.html">Actualités</a></li><li><a href="#assistant-ia">Assistant IA</a></li><li><a href="#faq">FAQ</a></li><li><a href="#medecin">Le médecin</a></li><li><a href="#contact">Contact</a></li><li><a href="#consulter">Accès</a></li></ul></div>
     </div>
     <div class="seo">
       <a href="#refractive">Ophtalmologue Nice</a> · <a href="#refractive">chirurgien ophtalmologue Nice</a> · <a href="#refractive">opération laser des yeux Nice</a> · <a href="#refractive">LASIK Nice</a> · <a href="#refractive">PKR Nice</a> · <a href="#refractive">implant ICL Nice</a> · <a href="#retine">chirurgie de la rétine Nice</a> · <a href="#retine">décollement de rétine Nice</a> · <a href="#soins">DMLA Nice</a> · <a href="#soins">injection intravitréenne Nice</a> · <a href="#soins">cataracte Nice</a> · <a href="#soins">rétinopathie diabétique Nice</a> · Alpes-Maritimes · Côte d'Azur
@@ -804,9 +838,86 @@
   function dmBot(t){dmAdd(t,'bot');}
   function dmSend(e){e.preventDefault();if(DM_busy)return false;var i=dmEl('dm-input'),q=i.value.trim();if(!q)return false;i.value='';dmAdd(q,'me');DM_hist.push({role:'user',content:q});DM_busy=true;var t=dmAdd('…','bot typing');
     fetch(DM_API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({client:'martiano',messages:DM_hist})})
-      .then(function(r){return r.json();}).then(function(d){t.remove();var rep=(d&&d.reply)?d.reply:"Désolé, je n'ai pas pu répondre. Réessayez, ou appelez le 04 97 19 30 46.";dmBot(rep);DM_hist.push({role:'assistant',content:rep});DM_busy=false;})
+      .then(function(r){return r.json();}).then(function(d){t.remove();var rep=(d&&d.reply)?d.reply:"Désolé, je n'ai pas pu répondre. Réessayez, ou appelez le 04 97 19 30 46.";var wantR=/\[\[RAPPEL\]\]/.test(rep);rep=rep.replace(/\[\[RAPPEL\]\]/g,'').trim();dmBot(rep);if(wantR)dmRappelBtn();DM_hist.push({role:'assistant',content:rep});DM_busy=false;})
       .catch(function(){t.remove();dmBot("Une erreur est survenue. Réessayez, ou appelez le 04 97 19 30 46.");DM_busy=false;});
     return false;}
+</script>
+<!-- RAPPEL MODAL -->
+<div id="rappel-modal" class="rp-overlay" onclick="if(event.target===this)closeRappel()">
+  <div class="rp-box" role="dialog" aria-label="Demande de rappel">
+    <button type="button" class="rp-x" aria-label="Fermer" onclick="closeRappel()">&times;</button>
+    <h3>Être rappelé par le cabinet</h3>
+    <p class="rp-sub">Laissez vos coordonnées : le secrétariat vous recontacte pour organiser une consultation avec le Dr&nbsp;Martiano.</p>
+    <form name="rappel-chirurgie" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onsubmit="return cfSend(event,'rappel-chirurgie',true)">
+      <input type="hidden" name="form-name" value="rappel-chirurgie">
+      <input type="hidden" name="sujet" id="rp-sujet" value="Chirurgie">
+      <p class="cf-hp"><label>Ne pas remplir&nbsp;: <input name="bot-field"></label></p>
+      <label>Nom et prénom<input type="text" name="nom" required></label>
+      <label>Téléphone<input type="tel" name="telephone" required></label>
+      <label>Créneau souhaité <span class="rp-opt">(optionnel)</span><input type="text" name="creneau" placeholder="ex. en semaine, le matin"></label>
+      <label class="cf-consent"><input type="checkbox" name="consentement" value="oui" required> <span>J'accepte d'être recontacté(e) par le cabinet.</span></label>
+      <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">Demander un rappel</button>
+      <span id="rp-status" class="cf-status" role="status"></span>
+    </form>
+  </div>
+</div>
+
+<style>
+  #contact{padding:70px 0;background:linear-gradient(180deg,#fff,var(--bg));}
+  .cform{max-width:720px;margin:26px auto 0;background:#fff;border:1px solid var(--line);border-radius:20px;padding:30px 30px 34px;box-shadow:0 24px 60px -34px rgba(19,49,79,.5);}
+  .cform label{display:block;font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:14px;}
+  .cf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .cform input,.cform select,.cform textarea{width:100%;margin-top:6px;border:1px solid #cfe0ee;border-radius:12px;padding:12px 14px;font:inherit;font-size:.92rem;font-weight:400;color:var(--ink);outline:none;background:#fff;transition:border-color .2s;}
+  .cform input:focus,.cform select:focus,.cform textarea:focus{border-color:var(--blue);}
+  .cform textarea{resize:vertical;}
+  .cf-consent{display:flex;align-items:flex-start;gap:10px;font-weight:400;font-size:.8rem;color:var(--muted);}
+  .cf-consent input{width:auto;margin-top:3px;flex:none;}
+  .cf-consent a{color:var(--blue);font-weight:600;}
+  .cf-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:4px;}
+  .cf-status{font-size:.85rem;font-weight:600;}
+  .cf-status.ok{color:#178a5a;}.cf-status.err{color:#c0392b;}
+  .cf-hp{position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden;}
+  @media(max-width:620px){.cf-row{grid-template-columns:1fr;}.cform{padding:24px 20px 28px;}}
+  .rp-overlay{position:fixed;inset:0;z-index:400;background:rgba(19,49,79,.55);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:20px;}
+  .rp-overlay.open{display:flex;animation:dmpop .2s ease;}
+  .rp-box{background:#fff;border-radius:20px;max-width:440px;width:100%;padding:30px 28px;position:relative;box-shadow:0 30px 80px -20px rgba(19,49,79,.6);}
+  .rp-box h3{font-size:1.4rem;margin-bottom:6px;}
+  .rp-sub{font-size:.9rem;color:var(--muted);margin-bottom:18px;}
+  .rp-box form label{display:block;font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:13px;}
+  .rp-box input[type=text],.rp-box input[type=tel]{width:100%;margin-top:6px;border:1px solid #cfe0ee;border-radius:12px;padding:12px 14px;font:inherit;font-size:.92rem;font-weight:400;outline:none;}
+  .rp-box input:focus{border-color:var(--blue);}
+  .rp-opt{font-weight:400;color:var(--muted);}
+  .rp-x{position:absolute;top:14px;right:14px;background:#eef4f9;border:none;width:34px;height:34px;border-radius:50%;font-size:1.3rem;line-height:1;cursor:pointer;color:var(--navy);}
+  .rp-x:hover{background:#dce8f2;}
+  .dm-cta{align-self:flex-start;max-width:90%;}
+  .dm-cta-btn{background:linear-gradient(135deg,#2C6FA0,#13314F);color:#fff;border:none;border-radius:12px;padding:11px 15px;font:inherit;font-weight:700;font-size:.86rem;cursor:pointer;box-shadow:0 10px 24px -12px rgba(19,49,79,.7);transition:.2s;}
+  .dm-cta-btn:hover{transform:translateY(-2px);}
+</style>
+
+<script>
+  function cfEncode(o){return Object.keys(o).map(function(k){return encodeURIComponent(k)+'='+encodeURIComponent(o[k]);}).join('&');}
+  function cfSend(e,formName,isRappel){
+    e.preventDefault();
+    var form=e.target;
+    var status=document.getElementById(isRappel?'rp-status':'cf-status');
+    var data={};new FormData(form).forEach(function(v,k){data[k]=v;});
+    data['form-name']=formName;
+    status.textContent='Envoi…';status.className='cf-status';
+    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:cfEncode(data)})
+      .then(function(r){
+        if(!r.ok)throw new Error();
+        form.reset();
+        status.textContent='✓ Merci, votre demande a bien été transmise. Le cabinet vous recontacte rapidement.';
+        status.className='cf-status ok';
+        if(isRappel)setTimeout(closeRappel,2600);
+      })
+      .catch(function(){status.textContent='Une erreur est survenue. Vous pouvez appeler le 04 97 19 30 46.';status.className='cf-status err';});
+    return false;
+  }
+  function openRappel(subject){var s=document.getElementById('rp-sujet');if(s&&subject)s.value=subject;document.getElementById('rappel-modal').classList.add('open');document.body.style.overflow='hidden';}
+  function closeRappel(){document.getElementById('rappel-modal').classList.remove('open');document.body.style.overflow='';}
+  function dmRappelBtn(){var w=document.createElement('div');w.className='dm-cta';var b=document.createElement('button');b.type='button';b.className='dm-cta-btn';b.textContent='\uD83D\uDCDE Être rappelé par le cabinet';b.onclick=function(){openRappel('Chirurgie (demande via assistant)');};w.appendChild(b);var m=document.getElementById('dm-msgs');m.appendChild(w);m.scrollTop=1e9;}
+  addEventListener('keydown',function(e){if(e.key==='Escape')closeRappel();});
 </script>
 </body>
 </html>
