@@ -1,0 +1,28 @@
+# Redirections 301 depuis l'ancien site (preservation du referencement)
+/pathologies/glaucome-aigu-chronique/    /glaucome-nice                  301
+/pathologies/glaucome-aigu-chronique     /glaucome-nice                  301
+/pathologies/conjonctivite/              /conjonctivite-nice             301
+/pathologies/conjonctivite               /conjonctivite-nice             301
+/pathologies/secheresse-oculaire/        /secheresse-oculaire-nice       301
+/pathologies/secheresse-oculaire         /secheresse-oculaire-nice       301
+/pathologies/keratocone/                 /keratocone-nice                301
+/pathologies/keratocone                  /keratocone-nice                301
+/pathologies/keratite-abces-corneen/     /keratite-nice                  301
+/pathologies/keratite-abces-corneen      /keratite-nice                  301
+/pathologies/corps-etranger/             /keratite-nice                  301
+/pathologies/nevrites-optiques/          /pathologies-nice               301
+/chirurgieretine/le-decollement-de-retine/  /corps-flottants-nice        301
+/chirurgieretine/les-corps-flottants/       /corps-flottants-nice        301
+/chirurgieretine/la-retine-artificielle/    /chirurgie-retine-nice       301
+/chirurgiecataracte/la-cataracte/        /cataracte-nice                 301
+/diabete/definition/                     /retinopathie-diabetique-nice   301
+/diabete/                                /retinopathie-diabetique-nice   301
+/dcmartiano/cv/                          /                               301
+
+# Filets de securite par dossier (anciennes URL non listees)
+/pathologies/*        /pathologies-nice             301
+/chirurgieretine/*    /chirurgie-retine-nice        301
+/chirurgiecataracte/* /cataracte-nice               301
+/chirurgierefractive/* /lasik-nice                  301
+/diabete/*            /retinopathie-diabetique-nice 301
+/dcmartiano/*         /                             301
